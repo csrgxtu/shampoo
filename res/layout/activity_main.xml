@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:orientation="vertical">
+    
+	 <TextView 
+	     android:text="REMOTE VIDEO"
+	     android:layout_width="wrap_content"
+	     android:layout_height="wrap_content"
+	    />
+	 <SurfaceView
+        android:id="@+id/surface_remote"
+        android:layout_width="320dip"
+        android:layout_height="240dip"
+        android:layout_centerHorizontal="true"
+         />
+	 
+	 <LinearLayout
+	     android:layout_width="wrap_content"
+	     android:layout_height="wrap_content"
+	     android:orientation="horizontal">
+	 <LinearLayout 
+	     android:layout_width="wrap_content"
+	     android:layout_height="wrap_content"
+	     android:orientation="vertical">
+		<TextView 
+	     android:text="LOCAL VIDEO"
+	     android:layout_width="wrap_content"
+	     android:layout_height="wrap_content"
+	    />
+    <SurfaceView
+        android:id="@+id/surface_local"
+        android:layout_width="176dip"
+        android:layout_height="144dip" />
+    </LinearLayout>
+    
+	 <LinearLayout
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical" >
+          <TextView
+              android:text="LOG"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"/>
+          <TextView
+			    android:id="@+id/console"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content" />
+			<TextView
+			    android:id="@+id/ip"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content" />
+	</LinearLayout>
+	</LinearLayout>
+
+</LinearLayout>

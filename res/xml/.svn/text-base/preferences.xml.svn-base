@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+            android:title="Sound streaming">
+
+        <CheckBoxPreference
+                android:key="stream_audio"
+                android:title="Sound streaming"
+                android:defaultValue="false"
+                android:summary="Enable/Disable audio streaming" />
+
+        <ListPreference
+            android:title="Audio encoder"
+            android:key="audio_encoder"
+            android:defaultValue="3"
+            android:summary="Note that AAC streaming is experimental and requieres ICS"
+            android:entries="@array/audioEncoderArray"
+            android:entryValues="@array/audioEncoderValues" />
+        
+    </PreferenceCategory>
+    
+        <PreferenceCategory
+            android:title="Video streaming">
+
+        <CheckBoxPreference
+            android:key="stream_video"
+            android:title="Video streaming"
+            android:defaultValue="true"
+            android:summary="Enable/Disable video streaming" />
+            
+        <ListPreference
+            android:title="Video encoder"
+            android:key="video_encoder"
+            android:defaultValue="1"
+            android:summary="Two video compression algorithms are available: H.263 and H.264"
+            android:entries="@array/videoEncoderArray"
+            android:entryValues="@array/videoEncoderValues" />
+        
+        <ListPreference
+            android:title="Resolution"
+            android:key="video_resolution"
+            android:defaultValue="640x480"
+            android:entries="@array/videoResolutionArray"
+            android:entryValues="@array/videoResolutionArray" />
+                
+        <ListPreference
+            android:title="Framerate"
+            android:key="video_framerate"
+            android:defaultValue="15"
+            android:entries="@array/videoFramerateArray"
+            android:entryValues="@array/videoFramerateValues" />
+        
+        <ListPreference
+            android:title="Bitrate"
+            android:key="video_bitrate"
+            android:defaultValue="500"
+            android:entries="@array/videoBitrateArray"
+            android:entryValues="@array/videoBitrateValues" />
+
+    </PreferenceCategory>
+
+	<PreferenceCategory
+            android:title="Interfaces">
+
+		<CheckBoxPreference
+                android:key="enable_http"
+                android:title="HTTP server"
+                android:defaultValue="true"
+                android:summary="Enable/Disable the http interface" />
+	    
+        <CheckBoxPreference
+                android:key="enable_rtsp"
+                android:title="RTSP server"
+                android:defaultValue="true"
+                android:summary="Enable/Disable the rtsp interface" />
+        
+    </PreferenceCategory>
+        
+</PreferenceScreen>

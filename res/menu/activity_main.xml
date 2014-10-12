@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/option"
+        android:title="@string/menu_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+    <item android:id="@+id/do_play"
+        android:title="play"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+    <item android:id="@+id/do_stop"
+        android:title="stop"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+</menu>
