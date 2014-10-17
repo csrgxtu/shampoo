@@ -3,6 +3,9 @@ package com.Jay.rtspserver;
 
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 
 import br.com.voicetechnology.rtspclient.RTSPClient;
@@ -39,24 +42,27 @@ import android.view.MenuItem;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.support.v4.app.NavUtils;
 import android.text.Html;
+import android.text.format.Formatter;
 
 public class MainActivity extends Activity implements OnSharedPreferenceChangeListener, PlayerCallback{
 
 
 	private SurfaceView camera;
-    private SurfaceHolder holder;
+  private SurfaceHolder holder;
 	private VideoQuality defaultVideoQuality = new VideoQuality();
 	private SharedPreferences settings;
 	private PowerManager.WakeLock wl;
 	private RtspServer rtspServer;
-    private TextView console, ip;
+  private TextView console, ip;
     
     //client
-    private Rtspclient rtspClient;
-    private SurfaceView sfv;
+  private Rtspclient rtspClient;
+  private SurfaceView sfv;
 	private SurfaceHolder sfh;
 	private Bitmap bitmap;
 	private Canvas canvas ;
@@ -69,30 +75,87 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 	private int rtsp_port=9113;
 	
 	private IEBPlayer player;
+	
+	private TextView ONLINE_LST;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+      super.onCreate(savedInstanceState);
+      requestWindowFeature(Window.FEATURE_NO_TITLE);
+      setContentView(R.layout.activity_main);
         
-        console = (TextView) findViewById(R.id.console);
-        ip = (TextView) findViewById(R.id.ip);
-        camera = (SurfaceView)findViewById(R.id.surface_local);
-        camera.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        holder=camera.getHolder();
-        initParameters();
-        initSession();
+      console = (TextView) findViewById(R.id.console);
+      ip = (TextView) findViewById(R.id.ip);
+      camera = (SurfaceView)findViewById(R.id.surface_local);
+      camera.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+      holder=camera.getHolder();
+      initParameters();
+      initSession();
         
-        rtspServer = new RtspServer(rtsp_port, handler);
+      rtspServer = new RtspServer(rtsp_port, handler);
         
-        try {
-			rtspClient= new Rtspclient();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+      try {
+        rtspClient= new Rtspclient();
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
        //initDrawPannel();
        
-        sfv = (SurfaceView)this.findViewById(R.id.surface_remote);
+      sfv = (SurfaceView)this.findViewById(R.id.surface_remote);
+      
+      ONLINE_LST = (TextView)this.findViewById(R.id.online_list);
+      new Thread(new ClientThread()).start();
+    }
+    
+    class ClientThread implements Runnable {
+      private int SERVER_PORT = 9113;
+      //private String[] Servers = new String[2];
+      
+      private WifiManager wifiMgr = (WifiManager) getSystemService(WIFI_SERVICE);
+      private WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
+      private int ip = wifiInfo.getIpAddress();
+      private String localIP = Formatter.formatIpAddress(ip);
+      
+      //private String ipPrefix = localIP.substring(0, localIP.lastIndexOf(":") + 1);
+      private String ipPrefix = "192.168.1.";
+      
+      @Override
+      public void run() {
+        /*Log.i("localIP", localIP);
+        Log.i("localIP", String.valueOf(localIP.lastIndexOf(".")));
+        Log.i("localIP", localIP.substring(0, 10));*/
+        /*Servers[0] = "192.168.1.100";
+        Servers[1] = "192.168.1.101";*/
+        
+        for (int i = 100; i < 102; i++) {
+          String server = ipPrefix + String.valueOf(i);
+          try {
+            InetAddress serverAddr = InetAddress.getByName(server);
+  
+            Socket socket = new Socket(serverAddr, SERVER_PORT);
+            Log.i("ClientThread", "Connected");
+            socket.close();
+            String tmp = (String)ONLINE_LST.getText();
+            tmp += "\n" + server + ":UP";
+            ONLINE_LST.setText(tmp);
+          } catch (UnknownHostException e1) {
+            Log.e("ClientThread", "Unknow host");
+            Log.i("ClientThread", "Not Connected");
+            Log.i("ConcateIP", ipPrefix);
+            /*String tmp = (String)ONLINE_LST.getText();
+            tmp += "\n" + server + ":OFF";
+            ONLINE_LST.setText(tmp);*/
+          } catch (IOException e1) {
+            //e1.printStackTrace();
+            Log.e("ClientThread", "IOException");
+            Log.i("ClientThread", "Not Connected");
+            /*String tmp = (String)ONLINE_LST.getText();
+            tmp += "\n" + server + ":OFF";
+            ONLINE_LST.setText(tmp);*/
+          }
+        }
+
+      }
     }
 
     @Override

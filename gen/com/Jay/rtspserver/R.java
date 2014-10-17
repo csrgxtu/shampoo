@@ -37,13 +37,15 @@ public final class R {
         public static final int ic_launcher=0x7f020001;
     }
     public static final class id {
-        public static final int console=0x7f0a0002;
-        public static final int do_play=0x7f0a0005;
-        public static final int do_stop=0x7f0a0006;
-        public static final int ip=0x7f0a0003;
-        public static final int option=0x7f0a0004;
-        public static final int surface_local=0x7f0a0001;
-        public static final int surface_remote=0x7f0a0000;
+        public static final int console=0x7f0a0003;
+        public static final int do_play=0x7f0a0007;
+        public static final int do_stop=0x7f0a0008;
+        public static final int ip=0x7f0a0004;
+        public static final int online_list=0x7f0a0005;
+        public static final int option=0x7f0a0006;
+        public static final int remote_video_text=0x7f0a0000;
+        public static final int surface_local=0x7f0a0002;
+        public static final int surface_remote=0x7f0a0001;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;

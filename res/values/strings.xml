@@ -1,8 +1,8 @@
 <resources>
 
-    <string name="app_name">rtspServer</string>
+    <string name="app_name">RTSP2P</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">轻听VoIP视频通信</string>
+    <string name="title_activity_main">RTSP2P</string>
 
 </resources>
