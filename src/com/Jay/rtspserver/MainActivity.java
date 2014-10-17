@@ -117,7 +117,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
       private String localIP = Formatter.formatIpAddress(ip);
       
       //private String ipPrefix = localIP.substring(0, localIP.lastIndexOf(":") + 1);
-      private String ipPrefix = "192.168.1.";
+      //private String ipPrefix = "192.168.1.";
       
       @Override
       public void run() {
@@ -126,8 +126,9 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
         Log.i("localIP", localIP.substring(0, 10));*/
         /*Servers[0] = "192.168.1.100";
         Servers[1] = "192.168.1.101";*/
+        String ipPrefix = localIP.substring(0, localIP.lastIndexOf(".") + 1);
         
-        for (int i = 100; i < 102; i++) {
+        for (int i = 100; i < 105; i++) {
           String server = ipPrefix + String.valueOf(i);
           try {
             InetAddress serverAddr = InetAddress.getByName(server);
@@ -135,9 +136,10 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
             Socket socket = new Socket(serverAddr, SERVER_PORT);
             Log.i("ClientThread", "Connected");
             socket.close();
-            String tmp = (String)ONLINE_LST.getText();
+            /*String tmp = (String)ONLINE_LST.getText();
             tmp += "\n" + server + ":UP";
-            ONLINE_LST.setText(tmp);
+            ONLINE_LST.setText(tmp);*/
+            handler.sendMessage(handler.obtainMessage(110, server));
           } catch (UnknownHostException e1) {
             Log.e("ClientThread", "Unknow host");
             Log.i("ClientThread", "Not Connected");
@@ -260,6 +262,13 @@ private final Handler handler = new Handler() {
 		case Session.MESSAGE_ERROR:
 			log((String)msg.obj);
 			break;
+		
+		case 110:
+		  Log.i("Handler", (String)msg.obj);
+		  String tmp = (String)ONLINE_LST.getText();
+		  tmp += "\n" + (String)msg.obj + ":ON";
+		  ONLINE_LST.setText(tmp);
+		  break;
 
 		}
 	}
