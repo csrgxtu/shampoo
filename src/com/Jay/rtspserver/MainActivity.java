@@ -128,7 +128,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
         Servers[1] = "192.168.1.101";*/
         String ipPrefix = localIP.substring(0, localIP.lastIndexOf(".") + 1);
         
-        for (int i = 100; i < 105; i++) {
+        for (int i = 125; i < 127; i++) {
           String server = ipPrefix + String.valueOf(i);
           try {
             InetAddress serverAddr = InetAddress.getByName(server);
@@ -144,6 +144,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
             Log.e("ClientThread", "Unknow host");
             Log.i("ClientThread", "Not Connected");
             Log.i("ConcateIP", ipPrefix);
+            Log.i("ConcateIP", server);
             /*String tmp = (String)ONLINE_LST.getText();
             tmp += "\n" + server + ":OFF";
             ONLINE_LST.setText(tmp);*/
